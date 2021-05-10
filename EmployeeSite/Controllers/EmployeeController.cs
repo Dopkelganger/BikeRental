@@ -42,11 +42,14 @@ namespace EmployeeSite.Controllers
         }
         public async Task<IActionResult> Delete(int id)
         {
-            Employee res = await _empRepo.GetAsync(id, BikeRentalRoute.Reservations);
-            if (res == null)
+            Employee employee = await _empRepo.GetAsync(id, BikeRentalRoute.Employees);
+            if (employee == null)
                 return NotFound();
-            await _empRepo.DeleteAsync(id, "reservation");
-            return View(nameof(Index));
+
+            await _empRepo.DeleteAsync(id, BikeRentalRoute.Employees);
+
+            return RedirectToAction(nameof(Index));
+
         }
     }
 }
